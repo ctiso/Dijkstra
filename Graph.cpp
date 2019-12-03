@@ -55,6 +55,7 @@ int Graph::minDistance() { //8 pts
 //Once the minimum is found (along with its index in the distance
 //array), the visited array at that index is set to True and that index is
 //returned from this method.
+
 }
 //This method prints out the final path from the starting vertex to the end vertex,
 //which is the index passed into this method
