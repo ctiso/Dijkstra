@@ -31,6 +31,7 @@ void Graph::dijkstra() { // 5 pts
 //set the distance to the starting vertex to 0 and set
 //the visited array to true for the start index;
 	distances[start]=0;
+	prev[start]=start;
 	visited[start]=true;
 
 //Step 2:
@@ -42,14 +43,31 @@ void Graph::dijkstra() { // 5 pts
 		}
 		else{
 			distances[i]=adjMatrix[start][i];
+			prev[i]=start;
 		}
 	}
+
 //Step 3:
 //loop until every vertex has been visited, calling the methods
 //minDistance to find the next unvisited vertex with the minimum
 //distance, and then calling setDistances method for every vertex
 //to update distances for the unvisited vertices. (I called printInfoSoFar()
 //in this loop to see the progress of the algorithm)
+	bool visit=true;
+	int temp;
+	while(visit){
+		printInfoSoFar();
+		temp=minDistance();
+		visit=false;
+		setDistances(temp);
+		visited[temp]=true;
+		for(int i =0;i<numOfVerts;i++){
+			if(visited[i]==false){
+				visit=true;
+			}
+		}
+	}
+
 }
 void Graph::setDistances(int latestVert) { //8 pts
 	// This method updates the distances array with the costs being
@@ -59,6 +77,12 @@ void Graph::setDistances(int latestVert) { //8 pts
 	//minimum). If the minimum is through the recently visited vertex,
 	//then update the previous array so that it holds the latest visited
 	//vertex's index number
+	for(int i=0;i<numOfVerts;i++){
+		if(distances[i]>distances[latestVert]+adjMatrix[latestVert][i]){
+			distances[i]=distances[latestVert]+adjMatrix[latestVert][i];
+			prev[i]=latestVert;
+		}
+	}
 }
 int Graph::minDistance() { //8 pts
 	//This method finds the next unvisited vertex with the minimum
